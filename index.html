@@ -1,1 +1,975 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReMart BD - Buy and sell new and used products in Bangladesh.">
+  <title>ReMart BD | Buy Smart, Sell Easy</title>
+
+  <style>
+    :root {
+      --primary: #087f5b;
+      --primary-dark: #066649;
+      --light: #f4f8f6;
+      --text: #172b24;
+      --muted: #68776f;
+      --white: #ffffff;
+      --border: #e0e9e4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--text);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      display: inline-block;
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 18px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #e6f7ef, #f4f8ff);
+      padding: 72px 0;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 13px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.12;
+      margin: 14px 0;
+    }
+
+    h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 540px;
+      margin-bottom: 24px;
+    }
+
+    .hero-art {
+      min-height: 270px;
+      border-radius: 24px;
+      background: #d3f0df;
+      display: grid;
+      place-items: center;
+      font-size: clamp(80px, 13vw, 150px);
+    }
+
+    .search-panel {
+      display: flex;
+      gap: 10px;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px;
+      border-radius: 13px;
+      max-width: 640px;
+      box-shadow: 0 8px 25px #12331a0b;
+    }
+
+    .search-panel input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      outline: 0;
+      padding: 8px;
+    }
+
+    section {
+      padding: 60px 0;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: clamp(25px, 4vw, 34px);
+      line-height: 1.25;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .category {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 10px;
+      text-align: center;
+      background: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .category:hover,
+    .category.active {
+      border-color: var(--primary);
+      background: #eef9f2;
+      transform: translateY(-2px);
+    }
+
+    .category .emoji {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .products-section {
+      background: var(--light);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px #12331a10;
+    }
+
+    .product-image {
+      height: 175px;
+      display: grid;
+      place-items: center;
+      background: #edf4ef;
+      font-size: 68px;
+      position: relative;
+    }
+
+    .condition {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 20px;
+      background: white;
+      font-weight: 700;
+    }
+
+    .product-info {
+      padding: 16px;
+    }
+
+    .product-info h3 {
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .price {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 8px 0;
+    }
+
+    .location {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 13px;
+    }
+
+    .product-info .btn {
+      width: 100%;
+      text-align: center;
+      padding: 9px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 35px;
+      color: var(--muted);
+    }
+
+    .sell-section {
+      background: white;
+    }
+
+    .sell-layout {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 45px;
+      align-items: start;
+    }
+
+    .sell-intro {
+      background: #e9f7ef;
+      padding: 28px;
+      border-radius: 18px;
+    }
+
+    .sell-intro .big-icon {
+      font-size: 58px;
+    }
+
+    .sell-intro h2 {
+      margin: 12px 0;
+    }
+
+    .sell-intro p {
+      color: var(--muted);
+    }
+
+    .sell-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid #d8e2dc;
+      border-radius: 9px;
+      padding: 12px;
+      background: white;
+      outline-color: var(--primary);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 95px;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      grid-column: 1 / -1;
+    }
+
+    .sell-form .btn {
+      justify-self: start;
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .benefit {
+      border: 1px solid var(--border);
+      padding: 20px;
+      border-radius: 13px;
+    }
+
+    .benefit span {
+      font-size: 28px;
+    }
+
+    .benefit h3 {
+      margin: 8px 0 4px;
+    }
+
+    .benefit p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer {
+      background: #102b21;
+      color: white;
+      padding: 32px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    footer p {
+      color: #c3d4cb;
+      font-size: 14px;
+    }
+
+    .notice {
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 850px) {
+      .hero-content,
+      .sell-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art {
+        min-height: 190px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .categories {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      nav {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .navbar {
+        padding: 13px 0;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: space-between;
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 48px 0;
+      }
+
+      .search-panel {
+        flex-wrap: wrap;
+      }
+
+      .search-panel input {
+        flex-basis: 100%;
+      }
+
+      .categories {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-grid {
+        gap: 12px;
+      }
+
+      .product-image {
+        height: 135px;
+        font-size: 52px;
+      }
+
+      .product-info {
+        padding: 12px;
+      }
+
+      .product-info h3 {
+        font-size: 15px;
+      }
+
+      .price {
+        font-size: 18px;
+      }
+
+      .sell-form {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full,
+      .form-note {
+        grid-column: auto;
+      }
+
+      .benefits {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container navbar">
+      <a href="#" class="logo">ReMart <span>BD</span></a>
+
+      <nav aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#categories">Categories</a>
+        <a href="#sell">Sell Product</a>
+        <a href="#sell" class="btn">+ Sell Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-content">
+        <div>
+          <div class="eyebrow">Welcome to ReMart BD</div>
+          <h1>Buy Smart.<br>Sell Easy. <span>Live Smart.</span></h1>
+          <p>
+            Discover great deals on new and used products.
+            Give your unused items a new home and shop smarter in Bangladesh.
+          </p>
+
+          <form class="search-panel" id="searchForm">
+            <input
+              type="search"
+              id="searchInput"
+              placeholder="Search mobile, laptop, books..."
+              aria-label="Search products"
+            >
+            <button class="btn" type="submit">Search</button>
+          </form>
+        </div>
+
+        <div class="hero-art" aria-label="Shopping illustration">
+          🛍️
+        </div>
+      </div>
+    </section>
+
+    <section id="categories">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Shop by Category</h2>
+            <p>Find what you need in a few clicks.</p>
+          </div>
+        </div>
+
+        <div class="categories">
+          <button class="category active" data-category="All">
+            <span class="emoji">🛍️</span>All Items
+          </button>
+          <button class="category" data-category="Electronics">
+            <span class="emoji">📱</span>Electronics
+          </button>
+          <button class="category" data-category="Fashion">
+            <span class="emoji">👕</span>Fashion
+          </button>
+          <button class="category" data-category="Books">
+            <span class="emoji">📚</span>Books
+          </button>
+          <button class="category" data-category="Home">
+            <span class="emoji">🏠</span>Home & Living
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="products-section" id="products">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Featured Products</h2>
+            <p>Explore items listed on ReMart BD.</p>
+          </div>
+          <a href="#sell" class="btn btn-outline">List Your Item</a>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+          <!-- Products are added with JavaScript -->
+        </div>
+
+        <p class="notice">
+          Demo products are examples only. Contact details and real purchases
+          are not connected yet.
+        </p>
+      </div>
+    </section>
+
+    <section id="sell" class="sell-section">
+      <div class="container">
+        <div class="sell-layout">
+          <div class="sell-intro">
+            <div class="big-icon">📦</div>
+            <h2>Sell Your Product</h2>
+            <p>
+              Have something you no longer need? Add your product details
+              and preview your listing on this demo website.
+            </p>
+            <br>
+            <p><strong>✓</strong> Easy product listing</p>
+            <p><strong>✓</strong> Set your own price</p>
+            <p><strong>✓</strong> Help products find new owners</p>
+          </div>
+
+          <form class="sell-form" id="sellForm">
+            <div class="field full">
+              <label for="productName">Product Name *</label>
+              <input id="productName" name="productName"
+                placeholder="e.g. Samsung mobile phone" required maxlength="80">
+            </div>
+
+            <div class="field">
+              <label for="productPrice">Price (৳) *</label>
+              <input id="productPrice" name="productPrice"
+                type="number" min="1" step="1" placeholder="e.g. 5000" required>
+            </div>
+
+            <div class="field">
+              <label for="productCategory">Category *</label>
+              <select id="productCategory" name="productCategory" required>
+                <option value="">Choose category</option>
+                <option>Electronics</option>
+                <option>Fashion</option>
+                <option>Books</option>
+                <option>Home</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="productCondition">Condition *</label>
+              <select id="productCondition" name="productCondition" required>
+                <option value="">Choose condition</option>
+                <option>New</option>
+                <option>Used</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="productLocation">Location *</label>
+              <input id="productLocation" name="productLocation"
+                placeholder="e.g. Rajshahi" required maxlength="80">
+            </div>
+
+            <div class="field full">
+              <label for="productDescription">Description</label>
+              <textarea id="productDescription" name="productDescription"
+                placeholder="Describe your product..." maxlength="500"></textarea>
+            </div>
+
+            <p class="form-note">
+              Demo only: listings stay in this browser session and are not
+              sent to a server.
+            </p>
+
+            <button class="btn" type="submit">Add Product</button>
+          </form>
+        </div>
+
+        <div class="benefits">
+          <div class="benefit">
+            <span>🔎</span>
+            <h3>Easy Search</h3>
+            <p>Find products by name or category.</p>
+          </div>
+          <div class="benefit">
+            <span>💰</span>
+            <h3>Smart Deals</h3>
+            <p>Compare sample prices and choose carefully.</p>
+          </div>
+          <div class="benefit">
+            <span>♻️</span>
+            <h3>Reuse More</h3>
+            <p>Give usable items a second life.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <div class="logo" style="color:white">ReMart BD</div>
+        <p>Buy Smart. Sell Easy. Live Smart.</p>
+      </div>
+      <p>© <span id="year"></span> ReMart BD. Demo website.</p>
+    </div>
+  </footer>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Samsung Smartphone",
+        price: 8500,
+        category: "Electronics",
+        condition: "Used",
+        location: "Rajshahi",
+        emoji: "📱"
+      },
+      {
+        id: 2,
+        name: "Laptop for Study",
+        price: 22000,
+        category: "Electronics",
+        condition: "Used",
+        location: "Dhaka",
+        emoji: "💻"
+      },
+      {
+        id: 3,
+        name: "Business Statistics Book",
+        price: 350,
+        category: "Books",
+        condition: "Used",
+        location: "Rajshahi",
+        emoji: "📚"
+      },
+      {
+        id: 4,
+        name: "Classic Wrist Watch",
+        price: 1200,
+        category: "Fashion",
+        condition: "New",
+        location: "Khulna",
+        emoji: "⌚"
+      },
+      {
+        id: 5,
+        name: "Comfortable Backpack",
+        price: 750,
+        category: "Fashion",
+        condition: "Used",
+        location: "Barishal",
+        emoji: "🎒"
+      },
+      {
+        id: 6,
+        name: "Study Table",
+        price: 2500,
+        category: "Home",
+        condition: "Used",
+        location: "Dhaka",
+        emoji: "🪑"
+      },
+      {
+        id: 7,
+        name: "Wireless Headphones",
+        price: 1600,
+        category: "Electronics",
+        condition: "New",
+        location: "Rajshahi",
+        emoji: "🎧"
+      },
+      {
+        id: 8,
+        name: "Indoor Plant Pot",
+        price: 300,
+        category: "Home",
+        condition: "New",
+        location: "Sylhet",
+        emoji: "🪴"
+      }
+    ];
+
+    let selectedCategory = "All";
+    let searchTerm = "";
+
+    const productGrid = document.getElementById("productGrid");
+
+    function formatPrice(price) {
+      return "৳" + Number(price).toLocaleString("en-BD");
+    }
+
+    function renderProducts() {
+      const filtered = products.filter(product => {
+        const matchesCategory =
+          selectedCategory === "All" ||
+          product.category === selectedCategory;
+
+        const searchable =
+          (product.name + " " + product.category + " " + product.location)
+            .toLowerCase();
+
+        return matchesCategory && searchable.includes(searchTerm);
+      });
+
+      productGrid.replaceChildren();
+
+      if (filtered.length === 0) {
+        const message = document.createElement("div");
+        message.className = "empty-state";
+        message.textContent =
+          "No products found. Try another search or category.";
+        productGrid.appendChild(message);
+        return;
+      }
+
+      filtered.forEach(product => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+
+        const image = document.createElement("div");
+        image.className = "product-image";
+        image.textContent = product.emoji;
+        image.setAttribute("aria-label", product.name);
+
+        const badge = document.createElement("span");
+        badge.className = "condition";
+        badge.textContent = product.condition;
+        image.appendChild(badge);
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+
+        const title = document.createElement("h3");
+        title.textContent = product.name;
+
+        const price = document.createElement("div");
+        price.className = "price";
+        price.textContent = formatPrice(product.price);
+
+        const location = document.createElement("p");
+        location.className = "location";
+        location.textContent = "📍 " + product.location;
+
+        const buyButton = document.createElement("button");
+        buyButton.className = "btn";
+        buyButton.type = "button";
+        buyButton.textContent = "View Details";
+        buyButton.addEventListener("click", () => {
+          alert(
+            "Product: " + product.name +
+            "\nPrice: " + formatPrice(product.price) +
+            "\nCondition: " + product.condition +
+            "\nLocation: " + product.location +
+            "\n\nThis is a demo listing. Online buying is not connected yet."
+          );
+        });
+
+        info.append(title, price, location, buyButton);
+        card.append(image, info);
+        productGrid.appendChild(card);
+      });
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", event => {
+      event.preventDefault();
+      searchTerm = document.getElementById("searchInput")
+        .value.trim().toLowerCase();
+      renderProducts();
+      document.getElementById("products").scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+
+    document.getElementById("searchInput").addEventListener("input", event => {
+      searchTerm = event.target.value.trim().toLowerCase();
+      renderProducts();
+    });
+
+    document.querySelectorAll(".category").forEach(button => {
+      button.addEventListener("click", () => {
+        selectedCategory = button.dataset.category;
+
+        document.querySelectorAll(".category").forEach(item => {
+          item.classList.toggle("active", item === button);
+        });
+
+        renderProducts();
+        document.getElementById("products").scrollIntoView({
+          behavior: "smooth"
+        });
+      });
+    });
+
+    document.getElementById("sellForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const form = event.currentTarget;
+      const data = new FormData(form);
+      const name = String(data.get("productName")).trim();
+      const price = Number(data.get("productPrice"));
+      const category = String(data.get("productCategory"));
+      const condition = String(data.get("productCondition"));
+      const location = String(data.get("productLocation")).trim();
+
+      if (!name || !Number.isFinite(price) || price <= 0 ||
+          !category || !condition || !location) {
+        alert("Please enter valid information in all required fields.");
+        return;
+      }
+
+      const emojiByCategory = {
+        Electronics: "📱",
+        Fashion: "👕",
+        Books: "📚",
+        Home: "🏠",
+        Other: "📦"
+      };
+
+      products.unshift({
+        id: Date.now(),
+        name,
+        price,
+        category,
+        condition,
+        location,
+        emoji: emojiByCategory[category] || "📦"
+      });
+
+      selectedCategory = "All";
+      searchTerm = "";
+      document.getElementById("searchInput").value = "";
+
+      document.querySelectorAll(".category").forEach(button => {
+        button.classList.toggle(
+          "active",
+          button.dataset.category === "All"
+        );
+      });
+
+      renderProducts();
+      form.reset();
+
+      document.getElementById("products").scrollIntoView({
+        behavior: "smooth"
+      });
+
+      alert(
+        "Your demo listing has been added!\n\n" +
+        "Note: It is not published online for other visitors."
+      );
+    });
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    renderProducts();
+  </script>
+</body>
+</html>
+
